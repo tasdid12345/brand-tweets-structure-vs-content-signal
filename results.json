@@ -1,0 +1,32 @@
+{
+  "question": "On public tweets about competing airline brands, does adding tweet content to structural and engagement features predict negative customer sentiment better than a structure-only model?",
+  "method": "Stratified 80/20 split (seed 42). Baseline: LightGBM on structural/engagement counts. Improved: logistic regression on word+char TF-IDF stacked with the same structural features. Hyper-parameters chosen by 5-fold CV on the training set only; test set used once.",
+  "dataset": {
+    "name": "Twitter US Airline Sentiment (osanseviero/twitter-airline-sentiment)",
+    "source_url": "https://huggingface.co/datasets/osanseviero/twitter-airline-sentiment/resolve/main/Tweets.csv",
+    "n_rows": 14640,
+    "n_train": 11712,
+    "n_test": 2928,
+    "same_as_paper": false,
+    "baseline_is_papers_method": false
+  },
+  "metric_name": "ROC-AUC (test)",
+  "higher_is_better": true,
+  "baseline": "LightGBM on brand, #mentions, #hashtags, #URLs, retweet count and tweet length (structure only); n_estimators/num_leaves tuned by CV.",
+  "improved": "Logistic regression on word (1-2gram) and char_wb (2-5gram) TF-IDF of the tweet text plus the same structural features; C tuned by CV on the training set.",
+  "metrics": {
+    "baseline_score": 0.7782396434357218,
+    "baseline_score_std": 0.0,
+    "improved_score": 0.9331479386626448,
+    "improved_score_std": 1.1102230246251565e-16,
+    "baseline_accuracy": 0.7353142076502732,
+    "improved_accuracy": 0.8691939890710382,
+    "baseline_f1": 0.7038046071097076,
+    "improved_f1": 0.8582083937974643,
+    "baseline_cv_auc": 0.7677354405664109,
+    "improved_cv_auc": 0.9256968247091828,
+    "improved_best_C": 3.0,
+    "improvement": 0.15490829522692295
+  },
+  "notes": "Airline tweets are a stand-in for textile-brand data; the target is tweet-level negativity, not brand competitiveness. Single split; std is over seeds 42-44 only (logistic regression is near-deterministic), not over data splits. Accuracy and macro-F1 use a 0.5 threshold. Structural features are weak by design, so the gap mostly reflects the information in text."
+}
