@@ -24,6 +24,29 @@ python analysis.py
 ## Results
 Results are written to `results.json` (and a chart to `figures/`) when the script runs.
 
+## Results (latest run)
+
+On the Twitter US Airline Sentiment dataset (single held-out test set, n=2,928), a standard structure-only model on network and engagement counts reached 0.78 ROC-AUC, while logistic regression on TF-IDF text plus the same structural features reached 0.93.
+
+| Metric | Value |
+|---|---|
+| baseline_score | 0.7782 |
+| baseline_score_std | 0 |
+| improved_score | 0.9331 |
+| improved_score_std | 1.11e-16 |
+| baseline_accuracy | 0.7353 |
+| improved_accuracy | 0.8692 |
+| baseline_f1 | 0.7038 |
+| improved_f1 | 0.8582 |
+| baseline_cv_auc | 0.7677 |
+| improved_cv_auc | 0.9257 |
+| improved_best_C | 3 |
+| improvement | 0.1549 |
+
+Run on 2026-10-11. Full output: [results.json](results.json) · [run.log](run.log)
+
+Notes: Airline tweets are a stand-in for textile-brand data; the target is tweet-level negativity, not brand competitiveness. Single split; std is over seeds 42-44 only (logistic regression is near-deterministic), not over data splits. Accuracy and macro-F1 use a 0.5 threshold. Structural features are weak by design, so the gap mostly reflects the information in text.
+
 ## Reference
 
 This project is motivated by the following paper:
